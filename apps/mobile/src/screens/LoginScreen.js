@@ -5,8 +5,9 @@ import { useInicioSesion } from "@ecopac/shared";
 
 import LOGO from "../../assets/icon.png";
 import { Card, PrimaryButton, ScreenContainer, TextField } from "../components";
+import { ROUTES } from "../navigation/rutas";
 
-export default function LoginScreen() {
+export default function LoginScreen({ navigation }) {
   const {
     correo,
     setCorreo,
@@ -72,6 +73,14 @@ export default function LoginScreen() {
           returnKeyType="done"
           onSubmitEditing={handleSubmit}
         />
+
+        <Pressable
+          onPress={() => navigation.navigate(ROUTES.RESTABLECER_CONTRASENA)}
+          hitSlop={8}
+          style={styles.olvideContrasena}
+        >
+          <Text style={styles.olvideContrasenaTexto}>¿Olvidaste tu contraseña?</Text>
+        </Pressable>
 
         <PrimaryButton
           title="Iniciar sesión"
@@ -141,6 +150,16 @@ const styles = StyleSheet.create({
     color: colors.text,
   },
   toggleContrasena: {
+    fontFamily: typography.fontFamilyBase,
+    fontSize: typography.sizes.sm,
+    fontWeight: typography.weights.semibold,
+    color: colors.primary,
+  },
+  olvideContrasena: {
+    marginTop: spacing.sm,
+    alignSelf: "flex-end",
+  },
+  olvideContrasenaTexto: {
     fontFamily: typography.fontFamilyBase,
     fontSize: typography.sizes.sm,
     fontWeight: typography.weights.semibold,
