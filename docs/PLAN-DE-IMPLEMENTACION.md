@@ -119,14 +119,17 @@ Cada paso dice que se hace, como se comprueba y como se vuelve atras si falla. L
 
 ### Paso 1. Crear los proyectos de Supabase
 
-En la organizacion de Supabase de la cuenta de Ecopac, plan Free:
+En la organizacion de Supabase de la cuenta de Ecopac, plan Free. Los creo la organizacion desde el
+Dashboard el 14-10-2026; el equipo no creo proyectos nuevos, comprobo que estuvieran vacios (cero
+tablas en `public`, cero usuarios) y los adopto:
 
-| Proyecto | Region | Contrasena de base |
-| --- | --- | --- |
-| `ecopac-prod` | `us-east-1` | Generada aleatoria, 32 caracteres, solo para este proyecto |
-| `ecopac-dev` | `us-east-1` | Generada aleatoria, distinta de la de prod |
+| Proyecto | Ref | Region | Contrasena de base |
+| --- | --- | --- | --- |
+| `ecopacdigital Prod` (`ecopac-prod` en este documento) | `vuujluoxlkiakfstiiur` | `us-east-2` | Aleatoria, 32 caracteres, fijada por la Management API (`PATCH /v1/projects/{ref}/database/password`) |
+| `ecopacdigital Dev` (`ecopac-dev`) | `swwtjekapvnkjzshzdjk` | `us-west-2` | Aleatoria, distinta de la de prod, mismo camino |
 
-`us-east-1` es la region mas cercana a Guatemala por latencia de red entre las que ofrece Supabase.
+Las contrasenas se fijaron de nuevo para que nadie conozca mas valores que los que van a los
+secrets y al gestor de contrasenas de la organizacion.
 
 - **Comprobacion:** `supabase projects list` muestra los dos en `ACTIVE_HEALTHY`.
 - **Reversa:** borrar el proyecto desde Settings > General. No hay datos que perder.
@@ -456,7 +459,13 @@ terminar, antes de que la organizacion cargue datos reales.
 
 | Fecha | Paso | Que se hizo | Comprobado |
 | --- | --- | --- | --- |
-| 13-10-2026 | - | Decisiones de la seccion 3. Cambios de codigo de la seccion 4 | - |
+| 13-10-2026 | - | Decisiones de la seccion 3. Cambios de codigo de la seccion 4 | pgTAP 77 archivos / 1,212 pruebas, e2e 55, unitarias 3,623, lint y guardas del CI en verde, local |
+| 14-10-2026 | - | Se difieren el SMTP (verificacion de identidad de Google) y el respaldo (secrets de Drive pendientes). Ver pasos 7 y 11 | - |
+| 14-10-2026 | 1 | Adoptados los dos proyectos de la organizacion; contrasenas de base nuevas y distintas | Proyectos vacios; `200` al fijar cada contrasena |
+| 14-10-2026 | 2 | Registro cerrado en los dos (CFG-03) | `POST /auth/v1/signup` -> `422 signup_disabled` en los dos |
+| 14-10-2026 | 3 | CFG-04 a CFG-11 por la Management API: contrasena minima 8 con letras y digitos, confirm email, JWT 3600, rotacion y reuso 10 s, OTP 3600. Rate limits ya venian en 30/30/150 | Leido de vuelta con `GET /config/auth`. **CFG-12 (plantilla) no se pudo:** Supabase no deja editar plantillas en plan Free sin SMTP propio; va con el SMTP |
+| 14-10-2026 | 4 | Repositorio privado `ecopacdigital/Ecopac-Digital` creado | - |
+| 14-10-2026 | 5 | 13 de los 17 secrets (faltan los 4 `RESPALDO_*`). Llave de servicio `sb_secret_`, anonima legacy `eyJ` | `gh secret list` |
 
 ## 10. Lo que quedo creado
 
@@ -464,9 +473,9 @@ Se llena al ejecutar.
 
 | Que | Produccion | Desarrollo |
 | --- | --- | --- |
-| Repositorio | `<cuenta>/Ecopac-Digital`, ramas `main` / `develop` | |
-| Proyecto Supabase (ref) | | |
-| URL de Supabase | | |
+| Repositorio | `ecopacdigital/Ecopac-Digital` (privado), rama `main` | rama `develop` |
+| Proyecto Supabase (ref) | `ecopacdigital Prod` (`vuujluoxlkiakfstiiur`, `us-east-2`) | `ecopacdigital Dev` (`swwtjekapvnkjzshzdjk`, `us-west-2`) |
+| URL de Supabase | `https://vuujluoxlkiakfstiiur.supabase.co` | `https://swwtjekapvnkjzshzdjk.supabase.co` |
 | Web | | |
 | Proyecto de Vercel | | |
 | Proyecto de Expo | | |

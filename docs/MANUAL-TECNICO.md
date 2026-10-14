@@ -125,7 +125,7 @@ La CLI de Supabase no se instala aparte: se usa con `npx supabase`.
 
 ```bash
 # 1. Código y dependencias
-git clone https://github.com/URL-ECOPAC/Ecopac-Digital.git
+git clone https://github.com/ecopacdigital/Ecopac-Digital.git
 cd Ecopac-Digital
 git checkout develop
 npm install
