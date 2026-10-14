@@ -161,6 +161,9 @@ La guía corta equivalente es [QUICKSTART.md](QUICKSTART.md).
 
 ## 5. Configuración y claves de acceso
 
+> **Para instalar el sistema desde cero** en cuentas nuevas, el recorrido completo y en orden está
+> en [MANUAL-DE-INSTALACION.md](MANUAL-DE-INSTALACION.md). Esta sección resume qué clave va dónde.
+
 > **Regla:** ninguna llave real se sube al repositorio. `.env.development`, `.env.production` y
 > `supabase/functions/.env` están en `.gitignore`. Los nombres de las variables sí están
 > documentados; los valores, nunca.

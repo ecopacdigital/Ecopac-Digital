@@ -182,6 +182,13 @@ Detalles en [CONTRIBUTING.md](./CONTRIBUTING.md).
 - Las variables de entorno no cargan -> reiniciar el servidor despues de editar
   `.env.development`.
 
+## Instalar un ambiente desde cero
+
+Esta guia es para trabajar en local. Para levantar un ambiente remoto completo -cuentas, proyectos
+de Supabase, secrets, Vercel, APK y respaldos-, el recorrido en orden esta en
+**[MANUAL-DE-INSTALACION.md](./MANUAL-DE-INSTALACION.md)**. Las tres secciones que siguen resumen
+las trampas de cada pieza; el manual es el que dice en que orden se hace todo.
+
 ## Configurar el proyecto Supabase remoto (lo que no viaja en el repositorio)
 
 `supabase/config.toml` gobierna **el stack local y el CI, no los proyectos remotos**: el
