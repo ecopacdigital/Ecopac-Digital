@@ -425,7 +425,7 @@ Operacion
   SUPABASE.md              nube contra local
   CONFIGURACION-SUPABASE.md lo que se configura a mano en el Dashboard de cada ambiente
   COSTOS-Y-LIMITES.md      capas gratuitas, que se agota primero, siguiente escalon
-  DATOS-DEMO.md            datos de prueba
+  DATOS-DE-PRUEBA.md            datos de prueba
   DEPENDENCIES.md          politica de versionado
 
 Seguridad
