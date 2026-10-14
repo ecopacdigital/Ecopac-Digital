@@ -280,6 +280,10 @@ La migracion es idempotente: si el correo `ecopac.digital@gmail.com` ya existe, 
 vez de crear otro, y se limita a asegurar que su perfil tenga rol `administrador`. Se puede
 aplicar tantas veces como haga falta.
 
+**Es el unico usuario con el que nace una base.** La `00063` habia aprovisionado antes a
+`admin@ecopac.org`, un buzon que la organizacion no controla; la `00189` lo retira si nunca se
+uso, para que no quede una cuenta de administrador recuperable desde un correo ajeno (issue #252).
+
 **La migracion no fija ninguna contrasena.** Crea el usuario con `encrypted_password` en NULL a
 proposito: una contrasena versionada en un repositorio publico es una credencial publicada. La
 contrasena se establece despues, por uno de estos dos caminos:
