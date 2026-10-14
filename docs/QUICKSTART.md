@@ -144,7 +144,7 @@ packages/
 supabase/
   migrations/  esquema de base de datos versionado
   functions/   rutinas programadas (alertas de vencimiento)
-docs/          documentacion, entregables y contexto para IA
+docs/          documentacion, manuales y evidencias
 .github/       plantillas de issues, PR, Projects y workflows
 ```
 

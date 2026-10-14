@@ -18,6 +18,7 @@ configuracion de GitHub (plantillas de issues, PR y los workflows de CI/CD) esta
 | [SEGURIDAD.md](./SEGURIDAD.md)       | Politica de contrasenas, expiracion de sesion, credenciales y observabilidad (errores, fallos de red, bitacora, respaldos) |
 | [RESPALDO-Y-RECUPERACION.md](./RESPALDO-Y-RECUPERACION.md) | Plan de respaldo y recuperacion de la base de produccion: que se respalda, cada cuanto, quien puede abrirlo y como se restaura paso a paso (issue #914). Version formal en PDF: [formal/plan-de-respaldo-y-recuperacion.pdf](./formal/plan-de-respaldo-y-recuperacion.pdf) |
 | [CONFIGURACION-SUPABASE.md](./CONFIGURACION-SUPABASE.md) | Lista de verificacion de lo que se configura a mano en el Dashboard de cada ambiente |
+| [PLAN-DE-IMPLEMENTACION.md](./PLAN-DE-IMPLEMENTACION.md) | Salida a produccion a nombre de la organizacion (issue #252): decisiones, pasos en orden, secrets, app movil por APK, riesgos y lo que quedo creado |
 | [PROTECCION-DE-DATOS.md](./PROTECCION-DE-DATOS.md) | Logs, almacenamiento movil, cifrado de columnas y secretos (OWASP A02) |
 | [MARCO-LEGAL.md](./MARCO-LEGAL.md) | Marco jurídico guatemalteco aplicable: obligaciones, riesgos, licencia, consentimiento, transferencia internacional y delimitación de responsabilidad del equipo de desarrollo |
 | [manual/](./manual/README.md) | Manual de usuario y material de capacitacion (issue #251): indice de las piezas, formato comun y el [plan de capacitaciones](./manual/PLAN-DE-CAPACITACIONES.md) ([PDF](./formal/plan-de-capacitaciones.pdf)) |
@@ -51,7 +52,7 @@ pantallas usan los datos de demostracion.
 | [ARQUITECTURA-FRONTEND.md](./ARQUITECTURA-FRONTEND.md) | Como se comparte el frontend entre web y movil                        |
 | [PERMISOS.md](./PERMISOS.md)                           | Quien puede hacer que en cada modulo, y donde esta escrito            |
 | [SUPABASE.md](./SUPABASE.md)                           | Supabase en la nube contra el stack local, y como se sincronizan      |
-| [DATOS-DEMO.md](./DATOS-DEMO.md)                       | Datos de prueba para desarrollo                                       |
+| [DATOS-DE-PRUEBA.md](./DATOS-DE-PRUEBA.md)                       | Datos de prueba para desarrollo                                       |
 | [PLAN-DE-PRUEBAS.md](./PLAN-DE-PRUEBAS.md)             | Los ocho tipos de prueba con su criterio de aprobacion, que mide la cobertura, politica de evidencias y riesgos al ejecutarlo |
 | [CASOS-DE-PRUEBA.md](./CASOS-DE-PRUEBA.md)             | Cada caso de prueba vinculado a su requerimiento, y los requerimientos que no tienen ninguno |
 | [CUMPLIMIENTO-DE-REQUERIMIENTOS.md](./CUMPLIMIENTO-DE-REQUERIMIENTOS.md) | Los 34 RF y 15 RNF: donde esta cada uno, que issues lo cubren, su evidencia y su estado (issue #253) |

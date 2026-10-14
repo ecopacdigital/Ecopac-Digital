@@ -1,12 +1,18 @@
-# Datos de demostracion - Ecopac Digital
+# Datos de prueba - Ecopac Digital
 
-Que trae `supabase/seed-demo.sql`, como cargarlo y las credenciales de desarrollo.
-Complementa a [SUPABASE.md](./SUPABASE.md) (nube vs local) y a
+Que trae `supabase/fixtures/datos-de-prueba.sql`, donde se carga y las credenciales de las cuentas
+de prueba. Complementa a [SUPABASE.md](./SUPABASE.md) (nube vs local) y a
 [QUICKSTART.md](./QUICKSTART.md) (inicio rapido).
 
 **Todos los datos son inventados.** Ningun nombre, telefono, DPI, comunidad ni credencial de
-este seed corresponde a una persona o lugar real (regla de confidencialidad de
+este archivo corresponde a una persona o lugar real (regla de confidencialidad de
 [AGENTS.md](../AGENTS.md)).
+
+**Es un fixture de prueba, no un seed de ningun ambiente** (issue #252). Nacio como
+`supabase/seed-demo.sql` (issue #94); al pasar el repositorio a la cuenta de la organizacion se
+retiraron los seeds y los scripts que cargaban datos de demostracion en `ecopac-dev`, porque los
+dos ambientes de la organizacion arrancan **limpios**. Este archivo se conservo porque lo necesitan
+las suites pgTAP y las pruebas de flujos criticos, y solo se carga en el stack local desechable.
 
 ## Que trae
 
@@ -65,7 +71,7 @@ este seed corresponde a una persona o lugar real (regla de confidencialidad de
 Las alertas de vencimiento no se siembran: las genera la rutina programada
 (`supabase/functions/alertas-vencimiento`) sobre los lotes de arriba.
 
-## Credenciales (SOLO DESARROLLO)
+## Credenciales (SOLO STACK LOCAL)
 
 Mismo password para las siete cuentas. **Nunca reutilizar este password en ningun sistema
 real.**
@@ -80,84 +86,45 @@ real.**
 | Voluntario general (1) | `voluntario.demo@ecopac.test` | `EcopacDemo#2026` |
 | Voluntario general (2) | `voluntario2.demo@ecopac.test`| `EcopacDemo#2026` |
 
-## Como cargarlo
+## Donde se carga
 
-### Local (automatico)
+| Donde | Se carga | Como |
+| --- | --- | --- |
+| Stack local (`supabase start`) | Si | `supabase db reset` lo aplica despues de las migraciones (`supabase/config.toml`, `[db.seed].sql_paths`) |
+| Job "Validar migraciones y funciones" del CI | Si | El mismo `supabase db reset`, sobre un stack desechable |
+| `ecopac-dev` | **No** | `supabase db push` nunca ejecuta seeds |
+| `ecopac-prod` | **No, nunca** | Idem. Produccion recibe datos reales desde el primer dia |
 
-`supabase db reset` (y por lo tanto `supabase start` la primera vez) ya aplica
-`supabase/seed-demo.sql` despues de las migraciones, configurado en `supabase/config.toml`
-(`[db.seed].sql_paths`). No hace falta ningun paso extra: levantar el stack local ya deja la base
-con estos datos.
+Es idempotente: correr `supabase db reset` de nuevo no duplica filas ni falla.
 
-El seed es idempotente: correr `supabase db reset` de nuevo no duplica filas ni falla.
+Lo que un ambiente remoto necesita para funcionar **no** depende de este archivo, llega por
+migracion: el catalogo geografico (`00125`), la bodega principal (`00017`), las areas de atencion
+(`00182`) y el primer administrador (`00188`). Por eso `ecopac-dev` y `ecopac-prod` pueden nacer
+limpios y aun asi se puede crear la primera jornada.
 
 ### El catalogo geografico ya no es un seed (issue #704)
 
-`supabase/seed.sql` cargaba los 22 departamentos y los 340 municipios de Guatemala. **Desde la
-migracion `00125` no carga nada**: el archivo quedo con comentarios que explican el cambio, y el
-catalogo se siembra como parte de las migraciones.
+`supabase/seed.sql` cargaba los 22 departamentos y los 340 municipios de Guatemala. Desde la
+migracion `00125` el catalogo se siembra como parte de las migraciones, porque `supabase db push`
+**nunca ejecuta seeds**: sin municipios no hay comunidades y sin comunidades no se puede crear una
+jornada. Las tres comunidades de este fixture cuelgan de los municipios 106, 401 y 1601, que
+llegan por esa migracion.
 
-El motivo es el que hace que este documento exista: `supabase db push` -lo unico que corre contra
-`ecopac-dev` y `ecopac-prod`- **nunca ejecuta seeds**. Los datos de demostracion pueden vivir en un
-seed porque son opcionales y solo de desarrollo; el catalogo geografico no, porque **sin municipios
-no hay comunidades y sin comunidades no se puede crear una jornada**. Un proyecto de Supabase nuevo
-nacia sin ese catalogo y sin forma de cargarlo desde la aplicacion.
+### Quien depende de este archivo
 
-Las tres comunidades de `seed-demo.sql` siguen colgando de los municipios 106, 401 y 1601, que
-ahora llegan por migracion, asi que el seed de demostracion no cambio.
+- Las pruebas de flujos criticos (`pruebas/e2e/`) inician sesion con las siete cuentas de arriba
+  y usan los ids fijos de pacientes, jornadas y lotes (`pruebas/e2e/datos.js`).
+- Varias suites pgTAP reutilizan sus filas: `tokens_auth_users.sql`,
+  `desacoplar_gastos_de_inventario.sql`, `politicas_rls_atenciones_consultas_recetas.sql`,
+  `impedir_borrar_ultimo_administrador.sql`, `busqueda_pacientes.sql`, entre otras.
+- `scripts/prueba-de-carga-jornada-50-pacientes.mjs`.
 
-### Recargar `ecopac-dev` desde cero: `scripts/recargar-datos-demo.sh`
+Si se quita o se cambia una fila, hay que correr `supabase test db` y `npm run test:e2e` contra
+el stack local antes de abrir el PR: el job "Validar migraciones y funciones" es la compuerta de
+"Aplicar migraciones", y si falla no se despliega nada.
 
-Deja `ecopac-dev` con los datos de este seed y nada mas, **conservando las cuentas del equipo**:
+## Fuera de alcance
 
-1. Vacia los datos de negocio (pacientes, jornadas, proyectos, donaciones, presupuesto, gastos,
-   inventario, notificaciones y auditoria). Conserva cuentas, permisos y catalogos. La lista esta
-   en `scripts/recargar-datos-demo/vaciar-datos-de-negocio.sql`.
-2. Corre `supabase/seed-demo.sql`.
-3. Deja una cuenta de administradora con el correo y la contrasena que se le pasan (si existe, le
-   fija la contrasena y el rol; si no, la crea).
-
-Todo en una sola transaccion: si algo falla, la base queda como estaba. Las credenciales llegan
-por variables de entorno y no quedan en el repositorio:
-
-```bash
-ECOPAC_DB_URL='postgresql://...'        # Project Settings > Database de ecopac-dev
-ECOPAC_ADMIN_CORREO='...'
-ECOPAC_ADMIN_CLAVE='...'
-ECOPAC_CONFIRMAR_VACIADO=si
-ECOPAC_REF_PRODUCCION='<ref de ecopac-prod>'  # opcional: si la URL lo contiene, se niega
-bash scripts/recargar-datos-demo.sh
-```
-
-Necesita `psql`. Los datos de negocio que se borran no vuelven: `ecopac-dev` no tiene respaldos
-(plan Free, `docs/CI-CD.md`). **Nunca contra `ecopac-prod`.**
-
-### `ecopac-dev` (manual, una sola vez, con criterio del equipo)
-
-`supabase db push` (lo que aplica el CI/CD en push a `develop`) **nunca ejecuta seeds**, solo
-migraciones - por diseno, ver [CI-CD.md](./CI-CD.md). Cargar estos datos en el proyecto
-`Ecopac-Digital-Dev` es una decision manual y explicita de quien administra el proyecto:
-
-```bash
-supabase link --project-ref <ref-de-ecopac-dev>
-supabase db push --include-seed
-```
-
-o, sin depender de esa bandera, conectando directo con `psql` a la base de `ecopac-dev` (URL
-en el dashboard, Project Settings > Database) y corriendo `supabase/seed-demo.sql`.
-
-### `ecopac-prod`
-
-**NUNCA.** Este archivo no debe ejecutarse jamas contra `Ecopac-Digital-Prod`. No existe
-ningun comando de este repositorio que lo intente: el job que aplica migraciones en `main`
-(`.github/workflows/supabase.yml`) solo corre `supabase db push`, sin seeds.
-
-## Fuera de alcance de este seed
-
-Desde la recarga completa ya incluye proyectos, atencion clinica, donaciones, presupuesto y
-gastos. Siguen fuera las notificaciones de correo y la configuracion de alertas, que salen de las
-migraciones y de la aplicacion.
-
-Las condiciones cronicas si estaban fuera de ese alcance y entraron despues, con la issue #122:
-la API expone un listado de pacientes cronicos por comunidad, y sin datos no habia forma de ver
-esa pantalla funcionando en local.
+Las notificaciones de correo y la configuracion de alertas no se siembran: salen de las
+migraciones y de la aplicacion. Las alertas de vencimiento tampoco: las genera la rutina
+programada (`supabase/functions/alertas-vencimiento`) sobre los lotes de arriba.

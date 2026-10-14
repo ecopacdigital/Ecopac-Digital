@@ -114,7 +114,7 @@ La CLI de Supabase no se instala aparte: se usa con `npx supabase`.
 
 | Servicio | Para qué | Quién necesita acceso |
 | --- | --- | --- |
-| GitHub (`URL-ECOPAC/Ecopac-Digital`) | Código, PRs, secrets de los workflows | Todo el equipo; secrets solo quien administra |
+| GitHub (cuenta de la organizacion, repositorio privado `Ecopac-Digital`) | Código, PRs, secrets de los workflows | Quien la organizacion autorice; secrets solo quien administra |
 | Supabase: proyectos `ecopac-dev` y `ecopac-prod` | Base de datos, Auth, Edge Functions | Quien administra; el resto trabaja en local |
 | Vercel | Despliegue de la web (preview por PR, producción desde `main`) | Quien administra |
 | Sentry | Errores de web, móvil y Edge Functions | Quien da soporte |
@@ -151,7 +151,7 @@ npx supabase functions serve --env-file supabase/functions/.env
 ```
 
 - **Usuarios de prueba**: los crea el seed de demostración; los correos, contraseñas y roles están en
-  [DATOS-DEMO.md](DATOS-DEMO.md). Son datos inventados: nunca se usan datos reales de pacientes.
+  [DATOS-DE-PRUEBA.md](DATOS-DE-PRUEBA.md). Son datos inventados: nunca se usan datos reales de pacientes.
 - **Studio** (el panel de la base local): <http://localhost:54423>. La API local queda en el
   puerto 54421 (los puertos están en `supabase/config.toml`).
 - **Correo local**: todo lo que "se envía" en local cae en Mailpit, <http://localhost:54424>.
