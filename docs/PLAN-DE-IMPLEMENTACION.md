@@ -502,6 +502,7 @@ terminar, antes de que la organizacion cargue datos reales.
 | 14-10-2026 | 11 | Disparados a mano: alertas de vencimiento, keep-alive y verificar despliegue. Respaldo **desactivado** hasta tener sus secrets | Las 6 filas de las matrices en verde; los dos ambientes "al dia" |
 | 14-10-2026 | - | Colaboradores con escritura: `LisAY22`, `WilderL`, `Karmaz-29` (equipo, durante el soporte) | Invitaciones enviadas |
 | 14-10-2026 | 3 y 7 | SMTP de Auth (CFG-13), plantilla de recuperacion (CFG-12) y `SMTP_*` de las funciones (CFG-16) en los dos proyectos, con el Gmail de la organizacion (`smtp.gmail.com:465`). La contrasena de aplicacion se normaliza **sin espacios**: Google la muestra en cuatro grupos | Login SMTP `235`; `POST /auth/v1/recover` en prod -> `200`; `enviar-notificaciones` -> `"correo": "enviado"`. Llegada de los correos: issue #954 del curso |
+| 14-10-2026 | 3 y 7 | Correo comprobado con envios reales en los dos ambientes: recuperacion con la plantilla de Ecopac, bienvenida de una invitacion desde el navegador y notificacion. Lo probaron Karmaz-29, WilderL y LisAY22 | Issue #954 del curso, cerrada |
 | 14-10-2026 | 12 | Proyecto de EAS `ecopac-digital` en la cuenta de Expo `ecopacdigitals-team` (`owner` y `projectId` en `app.config.js`); identificador `org.ecopacguatemala.digital` declarado definitivo; variables `EXPO_PUBLIC_*` en los ambientes `production` (prod) y `preview` (dev) de EAS | `eas env:list` en cada ambiente |
 | 14-10-2026 | 12 | Primera build del perfil `produccion`. EAS genero la llave de firma en la nube (no habia keytool local) y el `versionCode` remoto arranco en 2 | Ver la fila de la build |
 
@@ -520,10 +521,13 @@ Se llena al ejecutar.
 
 ### Lo que queda pendiente
 
+La issue #252 del curso se cerro el 14-10-2026 con el aprovisionamiento hecho. Lo que sigue en esta
+tabla quedo fuera de ella a proposito: el respaldo se lleva en la #914, y el APK en telefono, las
+pruebas posteriores y la entrega se hacen aparte.
+
 | Que | Bloquea | Paso |
 | --- | --- | --- |
-| Comprobar con correos reales el SMTP ya configurado (issue #954 del curso) | Las pruebas de correo, y por tanto la apertura | 3 y 7 |
-| Secrets `RESPALDO_*`, reactivar `respaldo-base.yml`, primer respaldo y restauracion | La carga de datos reales | 11 |
+| Secrets `RESPALDO_*`, reactivar `respaldo-base.yml`, primer respaldo y restauracion. Se lleva en la issue #914 del curso | La carga de datos reales | 11 |
 | Que la organizacion inicie sesion y cambie la contrasena temporal | La apertura | 10 |
 | Probar el APK en un telefono Android real contra `ecopac-prod`; respaldar la llave de firma (`eas credentials`) | La app movil en campo | 12 y seccion 7 |
 | Sentry (opcional) | Nada | - |
