@@ -266,7 +266,14 @@ si los dos archivos dejan de coincidir o si falta alguno.
 Las variables `VITE_*` se embeben en el bundle en tiempo de build, asi que un cambio de valor
 exige volver a desplegar: no basta con guardarlo en el Dashboard.
 
-Cuando el proyecto exista, anotar aqui la URL de cada ambiente.
+URL de cada ambiente (issue #252):
+
+| Ambiente | Web | Supabase |
+| --- | --- | --- |
+| Produccion (`main`) | https://ecopac-digital.vercel.app | `https://vuujluoxlkiakfstiiur.supabase.co` |
+| Desarrollo (`develop`) | https://ecopac-digital-git-develop-ecopacdigital.vercel.app (pide iniciar sesion en Vercel) | `https://swwtjekapvnkjzshzdjk.supabase.co` |
+
+Lo demas que quedo creado, y como, esta en [PLAN-DE-IMPLEMENTACION.md](./PLAN-DE-IMPLEMENTACION.md).
 
 ## Aprovisionamiento del primer administrador
 
