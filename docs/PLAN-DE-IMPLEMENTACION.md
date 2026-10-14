@@ -417,8 +417,9 @@ eas init                       # crea el proyecto en Expo y devuelve el projectI
 ```
 
 `eas init` no puede editar `app.config.js` (es JavaScript, no JSON) y pide agregar a mano
-`owner: "<cuenta de expo>"` y `extra: { eas: { projectId: "<id>" } }` dentro de `expo`. Ese cambio
-va en un PR.
+`owner: "<cuenta de expo>"` y `extra: { eas: { projectId: "<id>" } }` dentro de `expo`. Ya esta
+hecho: la cuenta es `ecopacdigitals-team` y el proyecto `ecopac-digital`. Este paso solo se repite
+si se recrea el proyecto de Expo.
 
 Variables por ambiente (valores publicos por diseno, pero no se versionan):
 
@@ -500,6 +501,9 @@ terminar, antes de que la organizacion cargue datos reales.
 | 14-10-2026 | 10 | Contrasena temporal al administrador en los dos ambientes | Login por API en los dos |
 | 14-10-2026 | 11 | Disparados a mano: alertas de vencimiento, keep-alive y verificar despliegue. Respaldo **desactivado** hasta tener sus secrets | Las 6 filas de las matrices en verde; los dos ambientes "al dia" |
 | 14-10-2026 | - | Colaboradores con escritura: `LisAY22`, `WilderL`, `Karmaz-29` (equipo, durante el soporte) | Invitaciones enviadas |
+| 14-10-2026 | 3 y 7 | SMTP de Auth (CFG-13), plantilla de recuperacion (CFG-12) y `SMTP_*` de las funciones (CFG-16) en los dos proyectos, con el Gmail de la organizacion (`smtp.gmail.com:465`). La contrasena de aplicacion se normaliza **sin espacios**: Google la muestra en cuatro grupos | Login SMTP `235`; `POST /auth/v1/recover` en prod -> `200`; `enviar-notificaciones` -> `"correo": "enviado"`. Llegada de los correos: issue #954 del curso |
+| 14-10-2026 | 12 | Proyecto de EAS `ecopac-digital` en la cuenta de Expo `ecopacdigitals-team` (`owner` y `projectId` en `app.config.js`); identificador `org.ecopacguatemala.digital` declarado definitivo; variables `EXPO_PUBLIC_*` en los ambientes `production` (prod) y `preview` (dev) de EAS | `eas env:list` en cada ambiente |
+| 14-10-2026 | 12 | Primera build del perfil `produccion`. EAS genero la llave de firma en la nube (no habia keytool local) y el `versionCode` remoto arranco en 2 | Ver la fila de la build |
 
 ## 10. Lo que quedo creado
 
@@ -512,16 +516,16 @@ Se llena al ejecutar.
 | URL de Supabase | `https://vuujluoxlkiakfstiiur.supabase.co` | `https://swwtjekapvnkjzshzdjk.supabase.co` |
 | Web | https://ecopac-digital.vercel.app | https://ecopac-digital-git-develop-ecopacdigital.vercel.app (con login de Vercel) |
 | Proyecto de Vercel | `ecopac-digital`, cuenta Hobby `ecopacdigital` | el mismo, entorno Preview |
-| Proyecto de Expo | pendiente (seccion 7) | |
+| Proyecto de Expo | `ecopacdigitals-team/ecopac-digital`, perfil `produccion` (APK) | perfil `desarrollo` (APK) |
 
 ### Lo que queda pendiente
 
 | Que | Bloquea | Paso |
 | --- | --- | --- |
-| SMTP de Auth y de las funciones, y la plantilla de recuperacion (CFG-12, 13, 16) | Las pruebas de correo, y por tanto la apertura | 3 y 7 |
+| Comprobar con correos reales el SMTP ya configurado (issue #954 del curso) | Las pruebas de correo, y por tanto la apertura | 3 y 7 |
 | Secrets `RESPALDO_*`, reactivar `respaldo-base.yml`, primer respaldo y restauracion | La carga de datos reales | 11 |
 | Que la organizacion inicie sesion y cambie la contrasena temporal | La apertura | 10 |
-| Proyecto de Expo, variables de EAS y primer APK | La app movil en campo | 12 y seccion 7 |
+| Probar el APK en un telefono Android real contra `ecopac-prod`; respaldar la llave de firma (`eas credentials`) | La app movil en campo | 12 y seccion 7 |
 | Sentry (opcional) | Nada | - |
 | Pruebas posteriores en produccion | La apertura | 13 |
 | Congelar el repositorio del curso y pausar sus proyectos | Nada | 14 |
