@@ -267,11 +267,11 @@ vuelta o con la prueba de la columna "Como se comprueba".
 | CFG-09 | Rotacion / reuse | 14-10-2026 / si (activada / 10 s) | 14-10-2026 / si (activada / 10 s) |
 | CFG-10 | Rate limits | 14-10-2026 / si (30 / 30 / 150, valores de fabrica) | 14-10-2026 / si (idem) |
 | CFG-11 | Email OTP expiration | 14-10-2026 / si (3600) | 14-10-2026 / si (3600) |
-| CFG-12 | Plantilla de recuperacion | 14-10-2026 / aplicada (4342 caracteres, asunto en espanol); falta ver el correo recibido (issue #954 del curso) | 14-10-2026 / aplicada; idem |
-| CFG-13 | SMTP de Auth | 14-10-2026 / `smtp.gmail.com:465`, 30 correos/hora; `POST /auth/v1/recover` -> `200`. Falta confirmar la llegada (#954) | 14-10-2026 / idem, sin prueba de envio |
-| CFG-14 | `ALLOWED_ORIGINS` | 14-10-2026 / cargado (falta probar una invitacion desde el navegador) | 14-10-2026 / cargado (URL de dev y `localhost:5173`) |
+| CFG-12 | Plantilla de recuperacion | 14-10-2026 / Karmaz-29, WilderL y LisAY22 / si (correo recibido con la plantilla de Ecopac, issue #954 del curso) | 14-10-2026 / Karmaz-29, WilderL y LisAY22 / si |
+| CFG-13 | SMTP de Auth | 14-10-2026 / Karmaz-29, WilderL y LisAY22 / si (`smtp.gmail.com:465`, 30 correos/hora; recuperacion recibida, #954) | 14-10-2026 / Karmaz-29, WilderL y LisAY22 / si |
+| CFG-14 | `ALLOWED_ORIGINS` | 14-10-2026 / Karmaz-29, WilderL y LisAY22 / si (invitacion desde el navegador, #954) | 14-10-2026 / Karmaz-29, WilderL y LisAY22 / si (URL de dev y `localhost:5173`) |
 | CFG-15 | `WEB_URL` | 14-10-2026 / cargado | 14-10-2026 / cargado |
-| CFG-16 | `SMTP_*` de las funciones | 14-10-2026 / cargados; `enviar-notificaciones` responde `"correo": "enviado"`. Falta una invitacion real (#954) | 14-10-2026 / idem |
+| CFG-16 | `SMTP_*` de las funciones | 14-10-2026 / Karmaz-29, WilderL y LisAY22 / si (correo de bienvenida de una invitacion real, #954) | 14-10-2026 / Karmaz-29, WilderL y LisAY22 / si |
 | CFG-17 | Extensiones | 14-10-2026 / si (las crea la 00138) | 14-10-2026 / si |
 | CFG-18 | Vault `notificaciones_url` | 14-10-2026 / si | 14-10-2026 / si |
 | CFG-19 | Vault `notificaciones_llave` | 14-10-2026 / si (`pg_net` responde 200) | 14-10-2026 / si (`pg_net` responde 200) |
@@ -282,11 +282,8 @@ vuelta o con la prueba de la columna "Como se comprueba".
 
 Lo que quedo sin cerrar en los dos ambientes, dicho aqui para que no se pierda:
 
-- **CFG-12, CFG-13 y CFG-16**: configurados el 14-10-2026 con el Gmail de la organizacion. Falta
-  la comprobacion con correos reales -recuperacion, invitacion y notificacion-, que se lleva en la
-  issue #954 del repositorio del curso.
 - **CFG-20**: el plan Free no da respaldos; el respaldo propio a Drive espera sus secrets
-  (`docs/PLAN-DE-IMPLEMENTACION.md`, paso 11).
+  (`docs/PLAN-DE-IMPLEMENTACION.md`, paso 11). Se lleva en la issue #914 del repositorio del curso.
 
 ---
 
