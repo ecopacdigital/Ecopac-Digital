@@ -247,6 +247,17 @@ historial del SQL Editor**, el riesgo que advierte `docs/CONFIGURACION-SUPABASE.
   `net._http_response`); invitar a una cuenta de prueba y ver que llega el correo de **bienvenida**,
   no el de restablecimiento.
 
+**El SMTP (CFG-13 y CFG-16) puede ir despues del resto, pero antes de abrir.** La contrasena de
+aplicacion de Gmail no se puede crear mientras Google tenga la cuenta en verificacion de identidad,
+lo que pasa con cuentas recien creadas o recien endurecidas (14-10-2026: "No pudimos verificar tu
+identidad"). Se destraba entrando desde el dispositivo y la red donde se creo la cuenta, o
+esperando unos dias sin reintentar. Mientras tanto:
+
+- `invitar-usuario` crea la cuenta igual; lo que no llega es el correo, y la contrasena se fija
+  desde Authentication > Users.
+- El administrador inicial (paso 10) fija su contrasena por el mismo camino.
+- Las pruebas de correo de la seccion 8 quedan pendientes, y sin ellas no se abre produccion.
+
 ### Paso 8. Vercel
 
 1. La cuenta de Vercel de la organizacion se conecta a la cuenta de GitHub de la organizacion
@@ -307,6 +318,17 @@ Con el codigo en `main`, GitHub programa los cuatro crons. Se dispara cada uno a
 | Mantener Supabase activo | Las dos filas en verde |
 | Verificar despliegue | Los dos ambientes "Al dia" |
 | Respaldo de la base | Archivo cifrado nuevo en Drive; luego, la primera restauracion real (`docs/RESPALDO-Y-RECUPERACION.md`) |
+
+**El respaldo puede ir despues del resto, pero antes de los datos reales.** Sus cuatro secrets
+(`RESPALDO_*`) dependen de la cuenta de Google de la organizacion y pueden no estar listos el dia
+del despliegue. Sin ellos, `respaldo-base.yml` falla en rojo **a proposito** y abre una issue cada
+dia. Por eso, mientras falten:
+
+1. Se desactiva el workflow en el repositorio nuevo: `gh workflow disable respaldo-base.yml`.
+2. Cuando esten los cuatro secrets: `gh workflow enable respaldo-base.yml`, una corrida a mano, y la
+   primera restauracion real.
+
+Mientras el respaldo no este probado, **produccion no recibe datos reales** (seccion 12, punto 3).
 
 ### Paso 12. App movil
 
