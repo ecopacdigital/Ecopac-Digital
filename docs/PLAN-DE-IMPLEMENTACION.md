@@ -304,7 +304,9 @@ de hacerlo privado, y conviene saberlo:
 
 ### Paso 10. Administrador inicial
 
-La migracion 00188 crea `ecopac.digital@gmail.com` como `administrador`, **sin contrasena**. La
+La migracion 00188 crea `ecopac.digital@gmail.com` como `administrador`, **sin contrasena**, y la
+00189 retira `admin@ecopac.org`, que la 00063 habia dejado como segundo administrador atado a un
+buzon que la organizacion no controla. La base queda con **un solo usuario**. La
 organizacion la fija con "Olvide mi contrasena" en la web de produccion; el correo llega a su
 propio Gmail. Nadie del equipo conoce esa contrasena.
 
