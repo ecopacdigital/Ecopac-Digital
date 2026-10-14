@@ -114,7 +114,7 @@ La CLI de Supabase no se instala aparte: se usa con `npx supabase`.
 
 | Servicio | Para qué | Quién necesita acceso |
 | --- | --- | --- |
-| GitHub (cuenta de la organizacion, repositorio privado `Ecopac-Digital`) | Código, PRs, secrets de los workflows | Quien la organizacion autorice; secrets solo quien administra |
+| GitHub (cuenta de la organizacion, repositorio publico `ecopacdigital/Ecopac-Digital`) | Código, PRs, secrets de los workflows | Quien la organizacion autorice; secrets solo quien administra |
 | Supabase: proyectos `ecopac-dev` y `ecopac-prod` | Base de datos, Auth, Edge Functions | Quien administra; el resto trabaja en local |
 | Vercel | Despliegue de la web (preview por PR, producción desde `main`) | Quien administra |
 | Sentry | Errores de web, móvil y Edge Functions | Quien da soporte |
