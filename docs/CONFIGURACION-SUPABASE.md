@@ -325,9 +325,11 @@ no hay hueco; lo habria para quien llame a la API directamente con un token roba
 
 ### Orden de aprovisionamiento
 
-`ecopac-prod` esta **pausado**, y su configuracion no se puede leer sin reanudarlo. El orden importa:
+Es el orden que se siguio el 14-10-2026 al aprovisionar `ecopac-prod` y `ecopac-dev`
+([PLAN-DE-IMPLEMENTACION.md](./PLAN-DE-IMPLEMENTACION.md), pasos 1 a 7), y el que hay que repetir con
+cualquier proyecto nuevo. El orden importa:
 
-1. Reanudar el proyecto.
+1. Crear el proyecto (o reanudarlo, si estaba pausado).
 2. **Cerrar el registro (CFG-03) antes que nada.** El valor por defecto de Supabase es abierto, y
    entre reanudar y cerrarlo hay una ventana en la que cualquiera con la llave publica -que viaja
    en el bundle del navegador- puede darse de alta. El rol por defecto de `perfiles` es voluntario

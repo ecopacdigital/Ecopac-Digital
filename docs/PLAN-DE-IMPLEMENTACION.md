@@ -9,8 +9,8 @@ sale cada valor; nunca el valor. Las credenciales se entregan por el canal de la
 
 | | |
 | --- | --- |
-| Version | 1.0 |
-| Fecha | 13 de octubre de 2026 |
+| Version | 1.1 |
+| Fecha | 17 de octubre de 2026 (1.0: 13 de octubre de 2026) |
 | Issue | #252 (repositorio del curso, `URL-ECOPAC/Ecopac-Digital`) |
 
 ---
@@ -469,16 +469,22 @@ Se corren **en produccion, recien desplegada**, y quedan como evidencia en `docs
 fecha y commit. Con datos ficticios y marcados: nombres con el prefijo `PRUEBA`, que se eliminan al
 terminar, antes de que la organizacion cargue datos reales.
 
-- [ ] Inicio de sesion con una cuenta de cada rol, y cada rol ve solo lo suyo (`docs/PERMISOS.md`)
-- [ ] Flujo completo: jornada, paciente, triaje, consulta, receta y entrega
-- [ ] Un movimiento de inventario con su aprobacion
-- [ ] Correo de invitacion (el de **bienvenida**) y de recuperacion llegan y abren la web de
-      produccion (`scripts/verificar-redireccion-recuperacion.mjs`)
-- [ ] Recarga de rutas internas y cabeceras HTTP (`scripts/verificar-cabeceras-http.mjs`)
-- [ ] `http://` redirige a `https://`
-- [ ] APK de produccion instalado en un telefono Android real, contra `ecopac-prod`
-- [ ] En verde: alertas de vencimiento, keep-alive, verificar despliegue y el primer respaldo
-- [ ] Restauracion del primer respaldo bajado de Drive
+**Ejecutadas el 17-10-2026** sobre `main` en `e11c9b5`: evidencia en
+[evidencias/2026-10-17.md](./evidencias/2026-10-17.md). Los datos de prueba se retiraron y la base
+quedo identica a como estaba antes de empezar (huella de las 60 tablas comprobada). El APK se
+instalo aparte en un telefono real. El primer respaldo y su restauracion se llevan en "Lo que queda
+pendiente" (seccion 10).
+
+- [x] Inicio de sesion con una cuenta de cada rol, y cada rol ve solo lo suyo (`docs/PERMISOS.md`)
+- [x] Flujo completo: jornada, paciente, triaje, consulta, receta y entrega
+- [x] Un movimiento de inventario con su aprobacion
+- [x] Correo de invitacion (el de **bienvenida**) y de recuperacion salen hacia la web de
+      produccion; la llegada a la bandeja se comprobo el 14-10-2026 (issue #954 del curso)
+- [x] Recarga de rutas internas y cabeceras HTTP, sobre la URL de produccion
+- [x] `http://` redirige a `https://`
+- [x] APK de produccion instalado en un telefono Android real (Samsung Galaxy A55), contra
+      `ecopac-prod`
+- [x] En verde: alertas de vencimiento, keep-alive y verificar despliegue
 
 ## 9. Registro de ejecucion
 
@@ -505,6 +511,8 @@ terminar, antes de que la organizacion cargue datos reales.
 | 14-10-2026 | 3 y 7 | Correo comprobado con envios reales en los dos ambientes: recuperacion con la plantilla de Ecopac, bienvenida de una invitacion desde el navegador y notificacion. Lo probaron Karmaz-29, WilderL y LisAY22 | Issue #954 del curso, cerrada |
 | 14-10-2026 | 12 | Proyecto de EAS `ecopac-digital` en la cuenta de Expo `ecopacdigitals-team` (`owner` y `projectId` en `app.config.js`); identificador `org.ecopacguatemala.digital` declarado definitivo; variables `EXPO_PUBLIC_*` en los ambientes `production` (prod) y `preview` (dev) de EAS | `eas env:list` en cada ambiente |
 | 14-10-2026 | 12 | Primera build del perfil `produccion`. EAS genero la llave de firma en la nube (no habia keytool local) y el `versionCode` remoto arranco en 2 | Ver la fila de la build |
+| 17-10-2026 | 13 | Pruebas posteriores en produccion (seccion 8) con cuentas y datos `PRUEBA`: los cinco roles, flujo clinico completo, movimiento con aprobacion, correos, rutas, cabeceras, HTTPS y crons. Datos de prueba retirados al terminar | 25 de 25 en verde: [evidencias/2026-10-17.md](./evidencias/2026-10-17.md). Base identica a la de antes (huella de las 60 tablas) |
+| 17-10-2026 | 12 | APK de produccion instalado en un telefono Android real, contra `ecopac-prod` | Samsung Galaxy A55, comprobado por el equipo |
 
 ## 10. Lo que quedo creado
 
@@ -522,16 +530,17 @@ Se llena al ejecutar.
 ### Lo que queda pendiente
 
 La issue #252 del curso se cerro el 14-10-2026 con el aprovisionamiento hecho. Lo que sigue en esta
-tabla quedo fuera de ella a proposito: el respaldo se lleva en la #914, y el APK en telefono, las
-pruebas posteriores y la entrega se hacen aparte.
+tabla quedo fuera de ella a proposito: el respaldo se lleva en la #914 y la entrega se hace aparte.
+Las pruebas posteriores (seccion 8) y el APK en telefono se completaron el 17-10-2026.
 
 | Que | Bloquea | Paso |
 | --- | --- | --- |
-| Secrets `RESPALDO_*`, reactivar `respaldo-base.yml`, primer respaldo y restauracion. Se lleva en la issue #914 del curso | La carga de datos reales | 11 |
+| Secrets `RESPALDO_*` y reactivar `respaldo-base.yml`. Se lleva en la issue #914 del curso | La carga de datos reales | 11 |
+| Primer respaldo de produccion en verde. Issue #914 del curso | La carga de datos reales | 11 |
+| Restauracion del primer respaldo bajado de Drive. Issue #914 del curso | La carga de datos reales | 11 |
 | Que la organizacion inicie sesion y cambie la contrasena temporal | La apertura | 10 |
-| Probar el APK en un telefono Android real contra `ecopac-prod`; respaldar la llave de firma (`eas credentials`) | La app movil en campo | 12 y seccion 7 |
+| Respaldar la llave de firma del APK (`eas credentials`) | Actualizar la app sin desinstalarla, si la llave se pierde | Seccion 7 |
 | Sentry (opcional) | Nada | - |
-| Pruebas posteriores en produccion | La apertura | 13 |
 | Congelar el repositorio del curso y pausar sus proyectos | Nada | 14 |
 | Revocar los tokens del aprovisionamiento y rotar llaves | La entrega | 14 |
 
