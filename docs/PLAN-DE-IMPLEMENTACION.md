@@ -9,8 +9,8 @@ sale cada valor; nunca el valor. Las credenciales se entregan por el canal de la
 
 | | |
 | --- | --- |
-| Version | 1.0 |
-| Fecha | 13 de octubre de 2026 |
+| Version | 1.2 |
+| Fecha | 18 de octubre de 2026 (1.1: 17 de octubre; 1.0: 13 de octubre de 2026) |
 | Issue | #252 (repositorio del curso, `URL-ECOPAC/Ecopac-Digital`) |
 
 ---
@@ -469,16 +469,22 @@ Se corren **en produccion, recien desplegada**, y quedan como evidencia en `docs
 fecha y commit. Con datos ficticios y marcados: nombres con el prefijo `PRUEBA`, que se eliminan al
 terminar, antes de que la organizacion cargue datos reales.
 
-- [ ] Inicio de sesion con una cuenta de cada rol, y cada rol ve solo lo suyo (`docs/PERMISOS.md`)
-- [ ] Flujo completo: jornada, paciente, triaje, consulta, receta y entrega
-- [ ] Un movimiento de inventario con su aprobacion
-- [ ] Correo de invitacion (el de **bienvenida**) y de recuperacion llegan y abren la web de
-      produccion (`scripts/verificar-redireccion-recuperacion.mjs`)
-- [ ] Recarga de rutas internas y cabeceras HTTP (`scripts/verificar-cabeceras-http.mjs`)
-- [ ] `http://` redirige a `https://`
-- [ ] APK de produccion instalado en un telefono Android real, contra `ecopac-prod`
-- [ ] En verde: alertas de vencimiento, keep-alive, verificar despliegue y el primer respaldo
-- [ ] Restauracion del primer respaldo bajado de Drive
+**Ejecutadas el 17-10-2026** sobre `main` en `e11c9b5`: evidencia en
+[evidencias/2026-10-17.md](./evidencias/2026-10-17.md). Los datos de prueba se retiraron y la base
+quedo identica a como estaba antes de empezar (huella de las 60 tablas comprobada). El APK se
+instalo aparte en un telefono real. El primer respaldo y su restauracion se llevan en "Lo que queda
+pendiente" (seccion 10).
+
+- [x] Inicio de sesion con una cuenta de cada rol, y cada rol ve solo lo suyo (`docs/PERMISOS.md`)
+- [x] Flujo completo: jornada, paciente, triaje, consulta, receta y entrega
+- [x] Un movimiento de inventario con su aprobacion
+- [x] Correo de invitacion (el de **bienvenida**) y de recuperacion salen hacia la web de
+      produccion; la llegada a la bandeja se comprobo el 14-10-2026 (issue #954 del curso)
+- [x] Recarga de rutas internas y cabeceras HTTP, sobre la URL de produccion
+- [x] `http://` redirige a `https://`
+- [x] APK de produccion instalado en un telefono Android real (Samsung Galaxy A55), contra
+      `ecopac-prod`
+- [x] En verde: alertas de vencimiento, keep-alive y verificar despliegue
 
 ## 9. Registro de ejecucion
 
@@ -489,7 +495,7 @@ terminar, antes de que la organizacion cargue datos reales.
 | 14-10-2026 | 1 | Adoptados los dos proyectos de la organizacion; contrasenas de base nuevas y distintas | Proyectos vacios; `200` al fijar cada contrasena |
 | 14-10-2026 | 2 | Registro cerrado en los dos (CFG-03) | `POST /auth/v1/signup` -> `422 signup_disabled` en los dos |
 | 14-10-2026 | 3 | CFG-04 a CFG-11 por la Management API: contrasena minima 8 con letras y digitos, confirm email, JWT 3600, rotacion y reuso 10 s, OTP 3600. Rate limits ya venian en 30/30/150 | Leido de vuelta con `GET /config/auth`. **CFG-12 (plantilla) no se pudo:** Supabase no deja editar plantillas en plan Free sin SMTP propio; va con el SMTP |
-| 14-10-2026 | 4 | Repositorio `ecopacdigital/Ecopac-Digital` creado (privado). Historial filtrado: 437 commits, sin entregables ni seeds. Se quitaron ademas las lineas `Co-authored-by` de asistentes de IA de los mensajes, con force-push antes de que nadie lo clonara | `git log --all` sin rastros; mismos arboles antes y despues de reescribir |
+| 14-10-2026 | 4 | Repositorio `ecopacdigital/Ecopac-Digital` creado (privado). Historial filtrado: 437 commits, sin entregables ni seeds | `git log --all` sin rastros de los entregables ni de los seeds |
 | 14-10-2026 | 5 | 13 de los 17 secrets (faltan los 4 `RESPALDO_*`). Llave de servicio `sb_secret_`, anonima legacy `eyJ` | `gh secret list` |
 | 14-10-2026 | 6 | Primer despliegue por el workflow: 180 migraciones y 3 Edge Functions, `develop` -> `ecopac-dev`, `main` -> `ecopac-prod` | "Aplicar migraciones" y "Supabase completo" en verde; `schema_migrations` hasta la 00188, 22 departamentos y 340 municipios, 0 pacientes |
 | 14-10-2026 | 6 | La 00189 (PR #7, y #8 a `main`) retira `admin@ecopac.org`: un solo usuario base | `auth.users` con solo `ecopac.digital@gmail.com` en prod y en dev |
@@ -505,6 +511,8 @@ terminar, antes de que la organizacion cargue datos reales.
 | 14-10-2026 | 3 y 7 | Correo comprobado con envios reales en los dos ambientes: recuperacion con la plantilla de Ecopac, bienvenida de una invitacion desde el navegador y notificacion. Lo probaron Karmaz-29, WilderL y LisAY22 | Issue #954 del curso, cerrada |
 | 14-10-2026 | 12 | Proyecto de EAS `ecopac-digital` en la cuenta de Expo `ecopacdigitals-team` (`owner` y `projectId` en `app.config.js`); identificador `org.ecopacguatemala.digital` declarado definitivo; variables `EXPO_PUBLIC_*` en los ambientes `production` (prod) y `preview` (dev) de EAS | `eas env:list` en cada ambiente |
 | 14-10-2026 | 12 | Primera build del perfil `produccion`. EAS genero la llave de firma en la nube (no habia keytool local) y el `versionCode` remoto arranco en 2 | Ver la fila de la build |
+| 17-10-2026 | 13 | Pruebas posteriores en produccion (seccion 8) con cuentas y datos `PRUEBA`: los cinco roles, flujo clinico completo, movimiento con aprobacion, correos, rutas, cabeceras, HTTPS y crons. Datos de prueba retirados al terminar | 25 de 25 en verde: [evidencias/2026-10-17.md](./evidencias/2026-10-17.md). Base identica a la de antes (huella de las 60 tablas) |
+| 17-10-2026 | 12 | APK de produccion instalado en un telefono Android real, contra `ecopac-prod` | Samsung Galaxy A55, comprobado por el equipo |
 
 ## 10. Lo que quedo creado
 
@@ -521,19 +529,9 @@ Se llena al ejecutar.
 
 ### Lo que queda pendiente
 
-La issue #252 del curso se cerro el 14-10-2026 con el aprovisionamiento hecho. Lo que sigue en esta
-tabla quedo fuera de ella a proposito: el respaldo se lleva en la #914, y el APK en telefono, las
-pruebas posteriores y la entrega se hacen aparte.
-
 | Que | Bloquea | Paso |
 | --- | --- | --- |
-| Secrets `RESPALDO_*`, reactivar `respaldo-base.yml`, primer respaldo y restauracion. Se lleva en la issue #914 del curso | La carga de datos reales | 11 |
-| Que la organizacion inicie sesion y cambie la contrasena temporal | La apertura | 10 |
-| Probar el APK en un telefono Android real contra `ecopac-prod`; respaldar la llave de firma (`eas credentials`) | La app movil en campo | 12 y seccion 7 |
-| Sentry (opcional) | Nada | - |
-| Pruebas posteriores en produccion | La apertura | 13 |
-| Congelar el repositorio del curso y pausar sus proyectos | Nada | 14 |
-| Revocar los tokens del aprovisionamiento y rotar llaves | La entrega | 14 |
+| Respaldo: secrets `RESPALDO_*`, reactivar `respaldo-base.yml`, primer respaldo en verde y su restauracion desde Drive | La carga de datos reales | 11 |
 
 ## 11. Riesgos y plan de reversa
 
@@ -557,7 +555,7 @@ Todas a la vez:
 3. Un respaldo de produccion restaurado con exito.
 4. La organizacion inicio sesion con su cuenta de administradora y cambio las contrasenas de todas
    las cuentas (seccion 13).
-5. El marco legal y el acta de entrega firmados (#915).
+5. El marco legal revisado y el acta de implementacion firmada.
 
 ## 13. Comunicacion con la organizacion
 
@@ -575,8 +573,9 @@ Lo que se le entrega a la organizacion, y como:
 | Que | Como |
 | --- | --- |
 | Repositorio | Ya es suyo: vive en su cuenta de GitHub |
-| Base de datos y scripts | `supabase/migrations/` (el esquema completo), `docs/DICCIONARIO-DE-DATOS.md`, `docs/MODELO-DE-DATOS.md`, `scripts/respaldo-base.sh` y `scripts/comprobar-restauracion.sh` |
+| Base de datos y scripts | `supabase/migrations/` (el esquema completo), `supabase/esquema-final.sql` (el esquema consolidado, de lectura), `docs/DESPLIEGUE_BASE_DE_DATOS.md`, `docs/DICCIONARIO-DE-DATOS.md`, `docs/MODELO-DE-DATOS.md`, `scripts/respaldo-base.sh` y `scripts/comprobar-restauracion.sh` |
 | Documentacion | `docs/` (incluidos los manuales de `docs/formal/` y `docs/manual/`) |
+| Acta de implementacion | Impresa y firmada en dos copias, una para la organizacion y otra para el equipo |
 | Credenciales de las cuentas | En persona o por un gestor de contrasenas. **Nunca** por WhatsApp ni correo en texto plano |
 | Lista de secrets | La tabla del paso 5: nombres y de donde sale cada valor, nunca los valores |
 | APK | La carpeta de Drive de la seccion 7 |

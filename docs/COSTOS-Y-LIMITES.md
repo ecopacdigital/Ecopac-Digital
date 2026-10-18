@@ -307,8 +307,9 @@ Y el limite muerde por partida doble: un proyecto Free **se pausa tras una seman
 Para eso existe `keep-alive-supabase.yml`, que segun la issue #762 llevaba desde el 13 de agosto
 reportando verde mientras cada ping fallaba; desde la #830 falla con el error HTTP y avisa cuando
 no hizo nada por falta de secrets. Un proyecto pausado no responde hasta que alguien lo reactiva a
-mano desde el panel, y si eso pasa en mitad de una jornada, el sistema no esta. `Ecopac-Digital-Prod`
-esta pausado hoy (#252).
+mano desde el panel, y si eso pasa en mitad de una jornada, el sistema no esta. Desde el
+14-10-2026 `keep-alive-supabase.yml` le hace ping a los dos proyectos de la organizacion,
+`ecopac-prod` y `ecopac-dev`.
 
 ---
 

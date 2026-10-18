@@ -908,8 +908,9 @@ repetir exactamente esto.
 Database > Backups de `Ecopac-Digital-Dev` dice literalmente "Free Plan does not include project
 backups. Upgrade to the Pro Plan for up to 7 days of scheduled backups" (issue #879). O sea que
 para dev **el respaldo propio de arriba no es un complemento: es el unico que hay**, y mientras
-nadie lo corra no existe ninguna copia. `Ecopac-Digital-Prod` esta pausado y su plan se confirma al
-reanudarlo (issue #252).
+nadie lo corra no existe ninguna copia. Produccion (`ecopac-prod`, de la organizacion desde el
+14-10-2026) tambien esta en Free: su respaldo es `respaldo-base.yml`
+([RESPALDO-Y-RECUPERACION.md](./RESPALDO-Y-RECUPERACION.md)), que se activa en la issue #914.
 
 La prueba de restauracion sigue sin hacerse. No es un olvido: `supabase db dump --linked` necesita
 vincular la CLI, y vincular pide la contrasena de la base. Queda como procedimiento escrito hasta
